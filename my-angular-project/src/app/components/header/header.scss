@@ -1,22 +1,31 @@
 @use '@angular/material' as mat;
 
+
 .mat-toolbar {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: var(--mat-sys-inverse-primary);
-  padding: 0  16px;
+  
   display: flex;
-  justify-content:space-around;
   align-items: center;
-  color: var(--mat-sys-primary);
-  font-size: --mat-sys-display-small-font;
+  justify-content:space-around;
+  
+   @include mat.toolbar-overrides((
+      container-background-color: var(--mat-sys-primary-container),
+      container-text-color: var(--mat-sys-primary),
+   ));
+
+   @include mat.icon-overrides((
+      color: var(--mat-sys-primary)
+   ));
+
+   font: var(--mat-sys-label-large);
 } 
 
 .nav-left {
    display: flex;
    align-items: center;
-   justify-content:left;
+ 
 }
 
 .nav-right {
@@ -26,5 +35,6 @@
    justify-content:right;
 }
 .header-element {
+  display: inline-flex;
   margin-right: 16px;
 }
