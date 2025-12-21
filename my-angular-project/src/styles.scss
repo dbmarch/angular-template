@@ -4,7 +4,7 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
-@use './app/styles/theme' as theme;
+@use './app/styles/themes/theme.scss' as theme;
 
 
 body {
@@ -59,6 +59,16 @@ body {
     color-scheme: light-dark;
   }
 
+  .color-azure {
+   @include theme.go((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$rose-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+
   .color-red {
     @include theme.go((
       color: (
@@ -70,15 +80,16 @@ body {
     ));
   }
 
-   .color-purple {
+   .color-blue {
     @include theme.go((
       color: (
-        primary: mat.$purple-palette,
-        tertiary: mat.$pink-palette,
+        primary: mat.$blue-palette,
+        tertiary: mat.$spring-green-palette,
       ),
       typography: Roboto,
       density: 0,
     ));
   }
 
+}
 }
