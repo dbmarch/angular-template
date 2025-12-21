@@ -1,48 +1,84 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { THEME_COLORS } from '../models/theme-colors.model';
-import { THEME_SCHEMES } from '../models/theme-scheme.model';
-import { DOCUMENT } from '@angular/common';
+import { Injectable, signal, effect } from '@angular/core';
+import { THEME_COLORS, THEME_SCHEMES, Theme } from '../models/theme.model';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ThemeService {
-  readonly #document = inject(DOCUMENT);
   readonly possibleColors = THEME_COLORS;
   readonly possibleSchemes = THEME_SCHEMES;
-  readonly #selectedColor = signal(this.possibleColors[0]);
-  readonly #selectedScheme = signal(this.possibleSchemes[0]);
+  #selectedColor = signal(this.possibleColors[0]);
+  #selectedScheme = signal(this.possibleSchemes[0]);
 
-  readonly selectedColor = this.#selectedColor.asReadonly();
-  readonly selectedScheme = this.#selectedScheme.asReadonly();
+  /**
 
-  readonly #primary = computed(() => this.selectedColor().primary);
-  readonly #accent = computed(() => this.selectedColor().accent);
-  readonly #scheme = computed(() => this.selectedScheme().value);
+   * The local storage key name used to save the theme that the user has chosen.  When the user
+   * closes the browser local storage persists so the theme will remain.
+   */
+  private readonly localStorageThemeKey = 'ThemeName';
 
-  setColor(name:string) {
-    const item = this.possibleColors.find(c => c.name === name);
-    if (item) {
-      this.#selectedColor.set(item);
+  /**
+
+   * Constructor used to inject the services.  This will also load the theme from local storage
+   * and then apply the theme that the user has saved.
+   *
+
+   * @param overlayContainer Used to get the theme class and remove it.
+   */
+
+  constructor() {
+    let theme = this.currentTheme;
+    const savedThemeString = localStorage.getItem(this.localStorageThemeKey);
+    if (savedThemeString) {
+      theme = JSON.parse(savedThemeString);
     }
+    this.#selectedScheme.set(theme.scheme ? theme.scheme : this.#selectedScheme());
+    this.#selectedColor.set(theme.color ? theme.color : this.#selectedColor());
+
+    effect(()=>{
+      const schemes =  this.possibleSchemes.map(obj => obj.value);
+      document.body.classList.remove(...schemes);
+      document.body.classList.add(this.#selectedScheme().value);
+    });
+
+    effect(()=>{
+      const colors = this.possibleColors.map(obj => obj.palette);
+      document.body.classList.remove(...colors);
+      document.body.classList.add(this.#selectedColor().palette);
+    });
+   }
+
+  setColor(color: string) {
+    const chosenColor = this.possibleColors.find(item => item.value === color);
+    if (chosenColor) {
+      this.#selectedColor.set(chosenColor);
+    } else {
+      console.error ('color not found', color);
+      console.error ('possible colors', this.possibleColors);
+    }
+    console.log ('currentTheme', this.currentTheme);
+    this.saveTheme(this.currentTheme);
   }
 
   setScheme(name: string) {
-    const item = this.possibleSchemes.find(s => s.value === name);
-    if (item) {
-      this.#selectedScheme.set(item);
+    const chosenScheme = this.possibleSchemes.find(item => item.value === name);
+    if (chosenScheme) {
+      this.#selectedScheme.set(chosenScheme);
     }
+    console.log ('currentTheme', this.currentTheme);
+    this.saveTheme(this.currentTheme);
   }
 
-  constructor() {
-    effect(() => {
-      this.#document.body.style.setProperty('--theme-primary', this.#primary());
-   });
-    effect(() => {
-      this.#document.body.style.setProperty('--theme-accent', this.#accent());
-   });
-    effect(() => {
-      console.log ('Setting color scheme to', this.#scheme());
-      this.#document.body.style.setProperty('color-scheme', this.#scheme());
-   });
-}}
+ 
+  private saveTheme(theme: Theme) {
+    localStorage.setItem(this.localStorageThemeKey, JSON.stringify(theme));
+  }
+
+  get currentTheme(): Theme {
+    return {color: this.#selectedColor(), scheme: this.#selectedScheme()};
+  }
+
+}
+
+ 

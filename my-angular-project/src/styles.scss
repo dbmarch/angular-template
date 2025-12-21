@@ -39,7 +39,6 @@ body {
 }
 
 :root {
-
   @include theme.go((
     color: (
       primary: mat.$azure-palette,
@@ -49,13 +48,37 @@ body {
     density: 0,
   ));
 
-  @include mat.theme((
-    color: (
-      theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$rose-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+  .dark-theme {
+    color-scheme: dark;
+  }
+
+  .light-theme {
+    color-scheme: light;
+  }
+  .light-dark-theme {
+    color-scheme: light-dark;
+  }
+
+  .color-red {
+    @include theme.go((
+      color: (
+        primary: mat.$red-palette,
+        tertiary: mat.$green-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    ));
+  }
+
+   .color-purple {
+    @include theme.go((
+      color: (
+        primary: mat.$purple-palette,
+        tertiary: mat.$pink-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    ));
+  }
+
 }

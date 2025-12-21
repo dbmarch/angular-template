@@ -1,0 +1,179 @@
+:root {
+
+  color-scheme: light;
+
+  @include theme.go((
+
+    color: (
+
+       primary: gray-theme-colors.$primary-palette,
+
+       tertiary: gray-theme-colors.$tertiary-palette
+
+    ),
+
+    typography: Roboto,
+
+    density: 0
+
+  ))
+
+}
+
+ 
+
+ 
+
+ 
+
+@use '@angular/material' as mat;
+
+@use 'sass:map';
+
+ 
+
+// This mixin is intended to surround the mat.theme calls.
+
+// It will create finer grain color tokens for primary palette
+
+@mixin go($theme-config) {
+
+    @include mat.theme($theme-config);
+
+ 
+
+    $primary-palette: _primary-palette($theme-config);
+
+    @if ($primary-palette != null) {
+
+        @each $l, $d in (
+
+            10:98,
+
+            20:95,
+
+            25:90,
+
+            30:80,
+
+            35:70,
+
+            40:60,
+
+            50:50,
+
+            60:40,
+
+            70:35,
+
+            80:30,
+
+            90:25,
+
+            95:20,
+
+            98:10) {
+
+            $light: map.get($primary-palette, $l);
+
+            $dark: map.get($primary-palette, $d);
+
+            --p-#{$l}: light-dark(#{$light}, #{$dark});
+
+        }
+
+    }
+
+    $tertiary-palette: _tertiary-palette($theme-config);
+
+    @if ($tertiary-palette != null) {
+
+        @each $l, $d in (
+
+            10:98,
+
+            20:95,
+
+            25:90,
+
+            30:80,
+
+            35:70,
+
+            40:60,
+
+            50:50,
+
+            60:40,
+
+            70:35,
+
+            80:30,
+
+            90:25,
+
+            95:20,
+
+            98:10) {
+
+            $light: map.get($tertiary-palette, $l);
+
+            $dark: map.get($tertiary-palette, $d);
+
+            --t-#{$l}: light-dark(#{$light}, #{$dark});
+
+        }
+
+    }
+
+}
+
+ 
+
+@function _primary-palette($theme-config) {
+
+    @if (map.has-key($theme-config, color)) {
+
+        $color: map.get($theme-config, color);
+
+        @if (map.has-key($color, primary)) {
+
+            @return map.get($color, primary);
+
+        } @else {
+
+            @return $color;
+
+        }
+
+    }
+
+    @return null;
+
+}
+
+ 
+
+@function _tertiary-palette($theme-config) {
+
+    @if (map.has-key($theme-config, color)) {
+
+        $color: map.get($theme-config, color);
+
+        @if (map.has-key($color, tertiary)) {
+
+            @return map.get($color, tertiary);
+
+        } @else {
+
+            @return $color;
+
+        }
+
+    }
+
+    @return null;
+
+}
+
+ 
