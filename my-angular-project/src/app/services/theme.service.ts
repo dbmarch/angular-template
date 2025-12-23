@@ -32,14 +32,17 @@ export class ThemeService {
     const savedThemeString = localStorage.getItem(this.localStorageThemeKey);
     if (savedThemeString) {
       theme = JSON.parse(savedThemeString);
+    }else{
+      this.saveTheme(this.currentTheme);
     }
     this.#selectedScheme.set(theme.scheme ? theme.scheme : this.#selectedScheme());
     this.#selectedColor.set(theme.color ? theme.color : this.#selectedColor());
-
+    console.log ('currentTheme', this.currentTheme);
     effect(()=>{
-      const schemes =  this.possibleSchemes.map(obj => obj.value);
+      const schemes =  this.possibleSchemes.map(obj => obj.scheme);
       document.body.classList.remove(...schemes);
-      document.body.classList.add(this.#selectedScheme().value);
+      document.body.classList.add(this.#selectedScheme().scheme);
+      console.log ('adding class', this.#selectedScheme().scheme);
     });
 
     effect(()=>{
