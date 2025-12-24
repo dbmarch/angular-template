@@ -34,7 +34,16 @@
    align-items: center;
    justify-content:right;
 }
+
 .header-element {
   display: inline-flex;
-  margin-right: 16px;
+
+  a {
+   padding: 5px;
+   margin: 5px;
+   border-radius: 10%;
+  }
+  a:hover {
+   background-color: var(--mat-sys-on-primary);
+  }
 }
