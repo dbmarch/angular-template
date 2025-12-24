@@ -28,22 +28,31 @@
  
 }
 
+mat-icon:hover {
+   cursor: pointer;
+   font-variation-settings:
+         'FILL' 1,
+         'wght' 400,
+         'GRAD' 0,
+         'opsz' 24;
+   }
+
 .nav-right {
    margin-left: auto;
    display: flex;
    align-items: center;
    justify-content:right;
-}
+   }
 
 .header-element {
   display: inline-flex;
 
   a {
    padding: 5px;
-   margin: 5px;
    border-radius: 10%;
   }
   a:hover {
    background-color: var(--mat-sys-on-primary);
+   cursor: pointer;
   }
 }

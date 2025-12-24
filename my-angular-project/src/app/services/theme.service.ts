@@ -48,7 +48,9 @@ export class ThemeService {
     effect(()=>{
       const colors = this.possibleColors.map(obj => obj.palette);
       document.body.classList.remove(...colors);
+      console.log ('removing ', ...colors)
       document.body.classList.add(this.#selectedColor().palette);
+      console.log ('adding ', this.#selectedColor().palette)
     });
    }
 

@@ -14,14 +14,28 @@
     </div>
 
     <div class="nav-right">
-   <mat-icon (click)="onClick('light')" fontSet="material-symbols-outlined">light_mode</mat-icon>
-   <mat-icon (click)="onClick('dark')" fontSet="material-symbols-outlined">dark_mode</mat-icon>
-        <button mat-icon-button class="example-icon favorite-icon">
-    <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon">
-     <mat-icon>share</mat-icon>
-    </button>
+      <div class="header-element">
+        <button mat-icon-button (click)="onClick('light')" >
+            <mat-icon fontSet="material-symbols-outlined">light_mode</mat-icon>
+        </button>
+      </div>
+
+      <div class="header-element">
+         <button mat-icon-button (click)="onClick('dark')">
+            <mat-icon  fontSet="material-symbols-outlined">dark_mode</mat-icon>
+         </button>
+      </div>
+
+      <!-- <div class="header-element">
+         <button mat-icon-button>
+            <mat-icon>favorite</mat-icon>
+         </button>
+      </div>
+      <div class="header-element">
+         <button mat-icon-button>
+            <mat-icon>share</mat-icon>
+         </button>
+      </div> -->
 
     </div>
   </mat-toolbar>

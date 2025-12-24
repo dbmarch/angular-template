@@ -1,1 +1,14 @@
-<p>theme-changer works!</p>
+<div class="center-page">
+<div class="form-color">
+   <h4>Choose Color Palette</h4>
+   <mat-form-field>
+   <mat-label>Palette</mat-label>
+   <mat-select [(value)]="selected">
+      @for (color of colors; track color) {
+         <mat-option [value]="color.value">{{color.name}}</mat-option>
+      }
+   </mat-select>
+   </mat-form-field>
+   <p> you selected {{selected()}}</p>
+</div>
+</div>

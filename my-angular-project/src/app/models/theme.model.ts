@@ -23,9 +23,9 @@ export const THEME_SCHEMES: ThemeScheme[] = [
 ]
 
 export const THEME_COLORS: ThemeColors[] = [
-   { palette: 'azure',  value: 'rose',   name: 'Azure'},
-   { palette: 'red',    value: 'pink',   name: 'Red'},
-   { palette: 'blue',   value: 'lightgreen',   name: 'Blue'},
-   { palette: 'green',  value: 'teal',   name: 'Green'},
+   { palette: 'color-azure',  value: 'azure',   name: 'Azure'},
+   { palette: 'color-red',    value: 'red',     name: 'Red'},
+   { palette: 'color-blue',   value: 'blue',    name: 'Blue'},
+   { palette: 'color-green',  value: 'green',   name: 'Green'},
 ]  
 
