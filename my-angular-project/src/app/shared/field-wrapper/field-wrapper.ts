@@ -1,5 +1,5 @@
-import { Component, computed, contentChild, effect, input } from '@angular/core';
-import { Field, MAX } from '@angular/forms/signals';
+import { Component, computed, contentChild, input } from '@angular/core';
+import { Field } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-field',

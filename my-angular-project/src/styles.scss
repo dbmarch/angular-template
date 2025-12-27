@@ -7,6 +7,8 @@
 @use './app/styles/themes/theme.scss' as theme;
 @use 'material-symbols';
 :root {
+  // Imported some css and it needed these defined. 
+  // Need to replace the css with our color scheme.
       /* Primary Colors */
     --color-primary: #7c92b3;
     --color-primary-hover: #6a7fa3;
