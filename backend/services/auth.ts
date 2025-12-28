@@ -1,14 +1,15 @@
-const jwt = require('jsonwebtoken'); 
-const bcrypt = require('bcryptjs');
-const dotenv = require("dotenv");
-require('dotenv').config(); 
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import dotenv from "dotenv";
+import {type User} from '../models/index.ts'
+dotenv.config(); 
 
-
-const users = [ ]; // in-memory database to keep things basic for this tutorial
+const users: User[] = [ ]; // in-memory database to keep things basic for this tutorial
 
 
 // *********************************************************
-const login = (req, res) => {
+const login = (req: express.Request, res: express.Response) => {
    const {
     username,
     password
@@ -33,7 +34,7 @@ const login = (req, res) => {
     username: user.username,
     role: user.role
   },
-  process.env.JWT_SECRET, {
+  process.env.JWT_SECRET ?? '', {
     expiresIn: '1h',
   });
 
@@ -44,7 +45,7 @@ const login = (req, res) => {
 
 
 // *********************************************************
-const signup = (req, res) => {
+const signup = (req: express.Request, res: express.Response) => {
 
   const { username, password, role } = req.body;
 
@@ -74,9 +75,10 @@ const signup = (req, res) => {
   });
 };
 
+
 // *********************************************************
-function authenticateToken(allowedRoles) {
-  return (req, res, next) => {
+function authenticateToken(allowedRoles: string[]) {
+  return (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
@@ -86,25 +88,25 @@ function authenticateToken(allowedRoles) {
       });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if (err) {
-        return res.status(403).json({
-          message: 'Invalid token'
-        });
-      }
+    // jwt.verify(token, process.env.JWT_SECRET ?? '', (err, user): jwt.VerifyCallback => {
+    //   if (err) {
+    //     return res.status(403).json({
+    //       message: 'Invalid token'
+    //     });
+    //   }
 
-      if (!allowedRoles.includes(...user.role)) {
-        console.log ('allowed', allowedRoles);
-        console.log ('logged in as', user.role);
+    //   if (!allowedRoles.includes(user.role?.[0] ?? '')) {
+    //     console.log ('allowed', allowedRoles);
+    //     console.log ('logged in as', user.role);
 
-        return res.status(403).json({
-          message: 'You do not have the correct role'
-        });
-      }
+    //     return res.status(403).json({
+    //       message: 'You do not have the correct role'
+    //     });
+    //   }
 
-      req.user = user;
-      next();
-    });
+    //   req.user = user;
+    //   next();
+    // });
   };
 }
-module.exports = {login, signup, authenticateToken}
+export{login, signup, authenticateToken};

@@ -1,13 +1,13 @@
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import {router as routes}  from './routes/index.ts';
+
 const port = process.env.PORT || 3000
 const client = process.env.CLIENT_PATH || '../my-angular-project/dist/my-angular-project/browser';
-
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const routes = require('./routes')
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.get('/healthcheck', (req, res) => {
+app.get('/healthcheck', (req , res ) => {
 	res.status(200).send({ message: 'healthcheck' })
 })
 
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 });
 
 app.listen(port, () => {
-	console.log(`Resource Server Ready on port ${port}`)
+  console.log(`Resource Server Ready on port ${port}`)
 })
 
-module.exports = { app };
+export { app };
