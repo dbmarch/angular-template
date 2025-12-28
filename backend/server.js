@@ -7,7 +7,7 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const services = require('./routes')
+const routes = require('./routes')
 
 const app = express();
 
@@ -21,7 +21,8 @@ app.get('/healthcheck', (req, res) => {
 	res.status(200).send({ message: 'healthcheck' })
 })
 
-app.use ('/api', services);
+// install our custom routes
+app.use ('/api', routes);
 
 // Serve the front end static files
 app.use(express.static(client));
