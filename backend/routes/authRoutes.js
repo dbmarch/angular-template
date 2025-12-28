@@ -1,10 +1,56 @@
+
+// https://dev.to/cerbos/authentication-and-authorization-in-nodejs-applications-12fk
+
+const dotenv = require("dotenv");
+require('dotenv').config(); 
+
+const jwt = require('jsonwebtoken'); 
+const bcrypt = require('bcryptjs');
 const express = require('express');
 const router = express.Router({mergeParams: true});
+
+const users = [ ]; // in-memory database to keep things basic for this tutorial
+
+// router.get("/protected", authenticateToken(["admin"]), (req, res) => {
+//   res.status(200).json({ message: `Welcome Admin ${req.user.username}!` });
+// });
+
+router.post('/signup', (req, res) => {
+
+  const { username, password, role } = req.body;
+
+  if (!Array.isArray(role)) {
+    return res.status(400).json({ message: "Role must be an array" });
+  }
+
+  const userExists = users.find(user =>user.username === username);
+  if (userExists) {
+    return res.status(400).json({
+      message: 'User already exists'
+    });
+  }
+
+  const hashedPassword = bcrypt.hashSync(password, 8);
+
+  users.push({
+    username,
+    password: hashedPassword,
+    role
+  });
+
+  console.log (users);
+
+  res.status(201).json({
+    message: 'User registered successfully'
+  });
+});
+
 
 // Login route 
 router.post('/login', (req, res) => {
   
   console.log ("POST /api/login");
+  console.log  ('secret', process.env.JWT_SECRET);
 
   console.log (req.body);
 
@@ -28,6 +74,8 @@ router.post('/login', (req, res) => {
       message: 'Invalid credentials'
     });
   }
+
+  console.log  ('secret', process.env.JWT_SECRET);
 
   const token = jwt.sign({
     username: user.username,
