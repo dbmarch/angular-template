@@ -11,6 +11,7 @@ import {
   submit
 } from '@angular/forms/signals';
 import { LoginService } from '../../services/login.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-user',
@@ -27,6 +28,7 @@ export class LoginUser {
   });
   readonly loginService = inject(LoginService);
   readonly submittedSuccessfully = signal(false);
+  readonly router = inject(Router);
 
 
   readonly loginForm = form(this.model, (path) => {
@@ -38,11 +40,12 @@ export class LoginUser {
   onSubmit() {
     submit(this.loginForm, async frm => {
       console.log('starting to submit the form', this.loginForm().value());
-      const res = await this.loginService.login(frm);
-      if (!res) {
+      const token = await this.loginService.login(frm);
+      if (!token) {
         this.submittedSuccessfully.set(true);
       }
-      return res;
+      console.log ('token', token);
+      this.router.navigate (['/']);
     })
   };
 }

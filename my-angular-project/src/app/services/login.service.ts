@@ -10,6 +10,7 @@ export class LoginService {
     private http = inject (HttpClient);
     private destroyRef = inject (DestroyRef);
     private baseUrl='http://localhost:3000/api/auth';
+    private readonly localStorageToken = 'JWT';
 
     async login(loginForm: FieldTree<Login>) {
         const res: CustomValidationError[] = [];
@@ -28,6 +29,7 @@ export class LoginService {
                 next: (token) => {
                     console.log ('next', token);
                     // Save the token.
+                    localStorage.setItem(this.localStorageToken, JSON.stringify(token));
                 },
                 error: (error: Error) => {
                     console.error('error', error);
