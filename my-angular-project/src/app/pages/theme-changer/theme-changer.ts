@@ -13,11 +13,12 @@ import { ThemeColors } from '../../models/theme.model';
 })
 export class ThemeChanger {
   private themeService = inject(ThemeService);
-  private colors = this.themeService.possibleColors;
+  colors = this.themeService.possibleColors;
   private initialColor: ThemeColors = this.themeService.currentTheme.color ?? this.colors[0];
   selected = model<string>(this.initialColor.value);
 
   constructor(){
+    // console.log ('initial color ', this.initialColor, this.selected())
     effect(()=>{
       if (this.selected()) {
         console.log ("Selected", this.selected());
