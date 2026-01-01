@@ -1,3 +1,30 @@
-<p>home works!</p>
+<form (ngSubmit)="onSubmit()" class='fruitForm'>
+   <input 
+      name = "selectedFruit"32
+      placeholder="choose fruit" 
+      [(ngModel)]="selectedFruit"
+      />
+   <button type='submit'>Submit</button>
+</form>
 
+<table class="fruitTable">
+   <thead>
+   <tr>
+      <th>Id</th>
+      <th>Fruit</th>
+      <th>Color</th>
+   </tr>
+   </thead>
+@for (f of fruits.value(); track $index) {
+   <tr>
+   <td>{{$index}}</td>
+   <td>{{f.name}} </td>
+   <td>{{f.color}} </td>
+   </tr>
+   }
+</table>
+<hr />
 
+<h2>Fruit {{fruit.value().id}}</h2>
+<p>Name: {{fruit.value().data.name}}</p>
+<p>Color: {{fruit.value().data.color}}</p>
