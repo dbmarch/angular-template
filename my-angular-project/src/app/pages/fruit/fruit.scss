@@ -1,0 +1,54 @@
+.fruitForm {
+   width: 50%;
+   padding: 5px;
+   display: flex;
+   flex: row;
+
+   input {
+      border: solid 1px black;
+      width: 100px;
+      padding: 5px;
+      border-radius: 5px;
+      &:hover,&:active{
+        cursor:text;
+      }
+   }
+
+   button {
+      margin-left: 10px;
+      padding: 5px;
+      border-radius: 5px;
+      
+      
+      &:hover,
+      &:active {
+         background-color: var(--mat-sys-inverse-primary);
+         cursor: pointer;
+         transition: background-color 0.3s ease-in-out; 
+      }
+   }
+
+   margin-bottom: 20px;
+}
+
+.fruitTable {
+   /* Set table width to its container's width, collapse borders */
+  width: 50%;
+  border-collapse: collapse;
+  margin: 20px 0; /* Add some margin around the table */
+
+  th,
+  td {
+  /* Add borders, padding, and align text in all cells */
+  
+  border: 1px solid var(--mat-sys-outline-variant);
+  padding: 12px;
+  text-align: left;
+}
+
+thead th {
+  /* Style the header row distinctly */
+  background-color: var(--mat-sys-inverse-primary);
+  color: var(--mat-sys-on-primary-container);
+}
+}

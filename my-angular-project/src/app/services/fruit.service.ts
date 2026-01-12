@@ -1,14 +1,9 @@
 
-
+import { Fruit } from "../models/fruiit.model"
 import { DestroyRef, Injectable, computed, effect, inject, signal } from "@angular/core";
-import { HttpClient, httpResource } from '@angular/common/http';
-import { throwError, map, catchError, Subscription } from "rxjs";
-import { Token } from '../models/token.model'
+import { httpResource } from '@angular/common/http';
 
-export interface Fruit {
-   name:   string,
-   color:  string,
-}
+
 
 export interface SelectedFruit {
    id: number,
@@ -69,13 +64,4 @@ constructor() {
       console.log ('fruitService fruit', this.fruitResource2.value());
    })
 }
-// fruitResource = httpResource<Fruit[]> (() => (
-//    () => (`${baseUrl}`), {
-//    parse: ((data: unknown) => {
-//       console.log ('parse ', data)
-//       return data;
-//    })
-//    }));
-
-
 }

@@ -1,23 +1,8 @@
 
 import express from 'express';
 import {  type Fruit } from '../models/index.ts';
+import { fruits } from '../data/fruits-collection.ts';
 const fruitRoutes = express.Router({mergeParams: true});
-
-const fruits: Fruit[] = [{
-   name: "apple",
-   color: "red",
-   },{
-      name: 'orange',
-      color: 'orange'
-   },{
-      name: 'banana',
-      color: 'yellow'
-   },{
-      name: 'cherry',
-      color: 'red'
-   }];
-
-
 
 fruitRoutes.get('/', (req, res) => {
    console.log ('GET fruit');
