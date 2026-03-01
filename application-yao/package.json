@@ -1,0 +1,23 @@
+{
+  "name": "application-yao",
+  "version": "1.0.0",
+  "description": "Test out yao-pkg",
+  "license": "MIT",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ncc build  -o build/lib ./src/index.js && pkg --target node16-win-x64 -o build/MY-API.exe ./build/lib/index.js"
+  },
+  "pkg": {
+    "bin": "index.js",
+    "scripts": "build/**/*.js",
+    "targets": [
+      "latest-linux",
+      "latest-win"
+    ],
+    "outputPath": "dist"
+  }
+}
